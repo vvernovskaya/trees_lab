@@ -3,27 +3,29 @@
 //
 #include<iostream>
 
+template<class T>
 
 // data structure that represents a node in the tree
 struct Node {
-    int data; // holds the key
+    T data; // holds the key
     Node *parent; // pointer to the parent
     Node *left; // pointer to left child
     Node *right; // pointer to right child
     int color; // 1 -> Red, 0 -> Black
 };
 
+template<class T>
 
 // class RBTree implements the operations in Red Black Tree
 class RBTree {
 private:
-    Node* root;
-    Node* TNULL;
+    Node<T>* root;
+    Node<T>* TNULL;
     unsigned int tree_size = 0;
 
     // initializes the nodes with appropriate values
     // all the pointers are set to point to the null pointer
-    void initializeNULLNode(Node* node, Node* parent) {
+    void initializeNULLNode(Node<T>* node, Node<T>* parent) {
         node->data = 0;
         node->parent = parent;
         node->left = nullptr;
@@ -31,28 +33,28 @@ private:
         node->color = 0;
     }
 
-    void preOrderHelper(Node* node) {
+    void preOrderHelper(Node<T>* node) {
         if (node != TNULL) {
              preOrderHelper(node->left);
             preOrderHelper(node->right);
         }
     }
 
-    void inOrderHelper(Node* node) {
+    void inOrderHelper(Node<T>* node) {
         if (node != TNULL) {
             inOrderHelper(node->left);
              inOrderHelper(node->right);
         }
     }
 
-    void postOrderHelper(Node* node) {
+    void postOrderHelper(Node<T>* node) {
         if (node != TNULL) {
             postOrderHelper(node->left);
             postOrderHelper(node->right);
          }
     }
 
-    Node* searchTreeHelper(Node* node, int key) {
+    Node<T>* searchTreeHelper(Node<T>* node, int key) {
        /* if (node == TNULL || key == node->data) {
             return node;
         }
@@ -63,8 +65,8 @@ private:
         return searchTreeHelper(node->right, key);
         */
 
-        Node* z = TNULL;
-        Node* x, y;
+        Node<T>* z = TNULL;
+        Node<T>* x, y;
         while (node != TNULL){
             if (node->data == key) {
                 z = node;
@@ -82,8 +84,8 @@ private:
     }
 
     // fix the rb tree modified by the delete operation
-    void fixDelete(Node* x) {
-        Node* s;
+    void fixDelete(Node<T>* x) {
+        Node<T>* s;
         while (x != root && x->color == 0) {  //x is black
             if (x == x->parent->left) {  //x is left child
                 s = x->parent->right;
@@ -151,7 +153,7 @@ private:
     }
 
 
-    void rbTransplant(Node* u, Node* v){
+    void rbTransplant(Node<T>* u, Node<T>* v){
         if (u->parent == nullptr) {
             root = v;
         } else if (u == u->parent->left){
@@ -162,11 +164,11 @@ private:
         v->parent = u->parent;
     }
 
-    void deleteNodeHelper(Node* node, int key) {
+    void deleteNodeHelper(Node<T>* node, int key) {
         // find the node containing key
-        Node* z = TNULL;
-        Node* x;
-        Node* y;
+        Node<T>* z = TNULL;
+        Node<T>* x;
+        Node<T>* y;
         while (node != TNULL){
             if (node->data == key) {
                 z = node;
@@ -215,8 +217,8 @@ private:
     }
 
     // fix the red-black tree
-    void fixInsert(Node* k){
-        Node* u;
+    void fixInsert(Node<T>* k){
+        Node<T>* u;
         while (k->parent->color == 1) {
             if (k->parent == k->parent->parent->right) {
                 u = k->parent->parent->left; // uncle
@@ -268,7 +270,7 @@ private:
 
 public:
     RBTree() {
-        TNULL = new Node;
+        TNULL = new Node<T>;
         TNULL->color = 0;
         TNULL->left = nullptr;
         TNULL->right = nullptr;
@@ -303,12 +305,12 @@ public:
 
     // search the tree for the key k
     // and return the corresponding node
-    Node* find(int k) {
+    Node<T>* find(int k) {
         return searchTreeHelper(this->root, k);
     }
 
     // find the node with the minimum key
-    Node* minimum(Node* node) {
+    Node<T>* minimum(Node<T>* node) {
         while (node->left != TNULL) {
             node = node->left;
         }
@@ -316,7 +318,7 @@ public:
     }
 
     // find the node with the maximum key
-    Node* maximum(Node* node) {
+    Node<T>* maximum(Node<T>* node) {
         while (node->right != TNULL) {
             node = node->right;
         }
@@ -325,8 +327,8 @@ public:
 
 
     // rotate left at node x
-    void leftRotate(Node* x) {
-        Node* y = x->right;
+    void leftRotate(Node<T>* x) {
+        Node<T>* y = x->right;
         x->right = y->left;
         if (y->left != TNULL) {
             y->left->parent = x;
@@ -344,8 +346,8 @@ public:
     }
 
     // rotate right at node x
-    void rightRotate(Node* x) {
-        Node* y = x->left;
+    void rightRotate(Node<T>* x) {
+        Node<T>* y = x->left;
         x->left = y->right;
         if (y->right != TNULL) {
             y->right->parent = x;
@@ -367,15 +369,15 @@ public:
     void insert(int key) {
         // Ordinary Binary Search Insertion
         this->tree_size++;
-        Node* node = new Node;
+        Node<T>* node = new Node<T>;
         node->parent = nullptr;
         node->data = key;
         node->left = TNULL;
         node->right = TNULL;
         node->color = 1; // new node must be red
 
-        Node* y = nullptr;
-        Node* x = this->root;
+        Node<T>* y = nullptr;
+        Node<T>* x = this->root;
 
         while (x != TNULL) {
             y = x;

@@ -4,13 +4,20 @@
 #include "RBTree.h"
 
 int main() {
-    RBTree my_tree;
+    RBTree<int> my_tree_int;
 
-    my_tree.insert(1);
-    my_tree.insert(2);
-    my_tree.find(1);
-    my_tree.erase(1);
-    my_tree.find(1);
-    std::cout << my_tree.size();
+    my_tree_int.insert(1);
+    my_tree_int.insert(2);
+    my_tree_int.find(1);
+    my_tree_int.erase(1);
+    my_tree_int.find(1);
+    std::cout << my_tree_int.size() << "\n";
+
+    RBTree<double> my_tree_double;
+
+    my_tree_double.insert(3.2);
+    my_tree_double.insert(4.3);
+    my_tree_double.insert(0.4);
+    std::cout << my_tree_double.size();
     return 0;
 }
