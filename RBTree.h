@@ -273,25 +273,6 @@ private:
         root->color = 0;
     }
 
-    void printHelper(NodePtr root, std::string indent, bool last) {
-        // print the tree structure on the screen
-        if (root != TNULL) {
-            std::cout<<indent;
-            if (last) {
-                std::cout<<"R----";
-                indent += "     ";
-            } else {
-                std::cout<<"L----";
-                indent += "|    ";
-            }
-
-            std::string sColor = root->color?"RED":"BLACK";
-            std::cout<<root->data<<"("<<sColor<<")"<<std::endl;
-            printHelper(root->left, indent, false);
-            printHelper(root->right, indent, true);
-        }
-        // std::cout<<root->left->data<<std::endl;
-    }
 
 public:
     RBTree() {
@@ -342,42 +323,6 @@ public:
         return node;
     }
 
-    // find the successor of a given node
-    NodePtr successor(NodePtr x) {
-        // if the right subtree is not null,
-        // the successor is the leftmost node in the
-        // right subtree
-        if (x->right != TNULL) {
-            return minimum(x->right);
-        }
-
-        // else it is the lowest ancestor of x whose
-        // left child is also an ancestor of x.
-        NodePtr y = x->parent;
-        while (y != TNULL && x == y->right) {
-            x = y;
-            y = y->parent;
-        }
-        return y;
-    }
-
-    // find the predecessor of a given node
-    NodePtr predecessor(NodePtr x) {
-        // if the left subtree is not null,
-        // the predecessor is the rightmost node in the
-        // left subtree
-        if (x->left != TNULL) {
-            return maximum(x->left);
-        }
-
-        NodePtr y = x->parent;
-        while (y != TNULL && x == y->left) {
-            x = y;
-            y = y->parent;
-        }
-
-        return y;
-    }
 
     // rotate left at node x
     void leftRotate(NodePtr x) {
@@ -468,9 +413,6 @@ public:
 
     }
 
-    NodePtr getRoot(){
-        return this->root;
-    }
 
     // delete the node from the tree
     void eraze(int data) {
@@ -479,12 +421,6 @@ public:
 
     }
 
-    // print the tree structure on the screen
-    void prettyPrint() {
-        if (root) {
-            printHelper(this->root, "", true);
-        }
-    }
 
 };
 
