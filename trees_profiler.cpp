@@ -48,7 +48,7 @@ public:
             tree_sizes.push_back(n);
             n += 100;
         }
-        while (n < 60000) {
+        while (n < 30000) {
             tree_sizes.push_back(n);
             n += 300;
         }
@@ -57,8 +57,14 @@ public:
     void test_insert() {
        for (int i_sz = 0; i_sz < tree_sizes.size(); i_sz++) {
            while (test_tree.size() < tree_sizes[i_sz]) {
-               test_tree.insert(rand_num(-10000, 10000));
+               std::cout << "Choosing random number..." << '\n';
+               std::cout << "-- Seeking tree_size = " << tree_sizes[i_sz] << '\n';
+               std::cout << "---- Before inserting test_tree size = " << test_tree.size() << '\n';
+               test_tree.insert(rand_num(-100000, 100000));
+               std::cout << "---- After inserting test_tree size = " << test_tree.size() << '\n';
+               std::cout << " Chose a random number." << '\n';
            }
+           std::cout << "Working on element " << tree_sizes[i_sz] << " out of " << tree_sizes[tree_sizes.size()-1] << '\n';
            test_insert_local();
        }
     }
@@ -71,12 +77,12 @@ public:
 
     void test_insert_local() {
         double avg_time_per_size = 0;
-
-        for (int i = 0; i < 2000; i++) {
-            int32_t curr_num = rand_num(-10000, 10000);
+        for (int i = 0; i < 100; i++) {
             double avg_time_per_num = 0;
+            int32_t curr_num = rand_num(-100000, 100000);
+            std::cout << "---- Chose number " << curr_num << ". Starting averaging..." << '\n';
 
-            for (int j = 0; j < 1000; j++) {
+            for (int j = 0; j < 300; j++) {
                 double time_start = get_time();
                 test_tree.insert(curr_num);
                 double time_finish = get_time();
@@ -84,20 +90,23 @@ public:
                 avg_time_per_num += time_finish - time_start;
                 test_tree.erase(curr_num);
             }
-            avg_time_per_num = double( (double) avg_time_per_num / 1000);
+            avg_time_per_num = double( (double) avg_time_per_num / 300);
             avg_time_per_size += avg_time_per_num;
+            std::cout << "---- Finished averaging" << '\n';
         }
-        avg_time_per_size = double( (double) avg_time_per_size / 2000);
+        avg_time_per_size = double( (double) avg_time_per_size / 100);
         times_insert.push_back(avg_time_per_size);
     }
 
     void print_insert_table() {
+        std::cout << "-- Started making a CSV... ";
         std::ofstream f;
         f.open("output_data_2.csv");
         for (int i = 0; i < tree_sizes.size(); i++) {
             f << tree_sizes[i] << ",";
-            f << std::setprecision(3) << times_insert[i] << std::endl;
+            f << std::setprecision(3) << times_insert[i] << '\n';
         }
+        std::cout << "finished CSV" << '\n';
     }
 };
 
