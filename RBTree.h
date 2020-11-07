@@ -19,6 +19,7 @@ class RBTree {
 private:
     Node* root;
     Node* TNULL;
+    unsigned int tree_size = 0;
 
     // initializes the nodes with appropriate values
     // all the pointers are set to point to the null pointer
@@ -283,6 +284,9 @@ public:
         root = TNULL;
     }
 
+    unsigned int size(){
+        return this->tree_size;
+    }
     // Pre-Order traversal
     // Node->Left Subtree->Right Subtree
     void preorder() {
@@ -366,6 +370,7 @@ public:
     // and fix the tree
     void insert(int key) {
         // Ordinary Binary Search Insertion
+        this->tree_size++;
         Node* node = new Node;
         node->parent = nullptr;
         node->data = key;
@@ -416,6 +421,7 @@ public:
 
     // delete the node from the tree
     void erase(int data) {
+        this->tree_size--;
         deleteNodeHelper(this->root, data);
         std::cout << data << " deleted \n";
 

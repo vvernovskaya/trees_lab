@@ -11,5 +11,6 @@ int main() {
     my_tree.find(1);
     my_tree.erase(1);
     my_tree.find(1);
+    std::cout << my_tree.size();
     return 0;
 }
