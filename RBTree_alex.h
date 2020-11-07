@@ -33,7 +33,8 @@ private:
 
     void preOrderHelper(Node* node) {
         if (node != TNULL) {
-             preOrderHelper(node->left);
+            std::cout<<node->data<<" ";
+            preOrderHelper(node->left);
             preOrderHelper(node->right);
         }
     }
@@ -41,7 +42,8 @@ private:
     void inOrderHelper(Node* node) {
         if (node != TNULL) {
             inOrderHelper(node->left);
-             inOrderHelper(node->right);
+            std::cout<<node->data<<" ";
+            inOrderHelper(node->right);
         }
     }
 
@@ -49,19 +51,20 @@ private:
         if (node != TNULL) {
             postOrderHelper(node->left);
             postOrderHelper(node->right);
-         }
+            std::cout<<node->data<<" ";
+        }
     }
 
     Node* searchTreeHelper(Node* node, int key) {
-       /* if (node == TNULL || key == node->data) {
-            return node;
-        }
+        /* if (node == TNULL || key == node->data) {
+             return node;
+         }
 
-        if (key < node->data) {
-            return searchTreeHelper(node->left, key);
-        }
-        return searchTreeHelper(node->right, key);
-        */
+         if (key < node->data) {
+             return searchTreeHelper(node->left, key);
+         }
+         return searchTreeHelper(node->right, key);
+         */
 
         Node* z = TNULL;
         Node* x, y;
@@ -77,6 +80,11 @@ private:
             }
         }
 
+        if (z == TNULL) {
+            std::cout<<"Couldn't find key" << key << " in the tree"<<std::endl;
+        }else{
+            std::cout << key << " found" << std::endl;
+        }
 
         return z;
     }
@@ -180,7 +188,8 @@ private:
         }
 
         if (z == TNULL) {
-             return;
+            std::cout<<"Couldn't find key " << key << " in the tree"<<std::endl;
+            return;
         }
 
         y = z;
@@ -404,6 +413,9 @@ public:
 
         // Fix the tree
         fixInsert(node);
+
+        std::cout << key << " deleted \n";
+
     }
 
 
@@ -411,6 +423,8 @@ public:
     void erase(int data) {
         this->tree_size--;
         deleteNodeHelper(this->root, data);
+        std::cout << data << " deleted \n";
+
     }
 
 
