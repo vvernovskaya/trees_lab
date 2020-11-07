@@ -9,5 +9,7 @@ int main() {
     my_tree.insert(1);
     my_tree.insert(2);
     my_tree.find(1);
+    my_tree.eraze(1);
+    my_tree.find(1);
     return 0;
 }

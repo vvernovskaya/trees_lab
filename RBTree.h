@@ -1,10 +1,8 @@
 //
 // Created by User on 11/7/2020.
 //
+#include<iostream>
 
-#include <iostream>
-
-using namespace std;
 
 // data structure that represents a node in the tree
 struct Node {
@@ -35,7 +33,7 @@ private:
 
     void preOrderHelper(NodePtr node) {
         if (node != TNULL) {
-            cout<<node->data<<" ";
+            std::cout<<node->data<<" ";
             preOrderHelper(node->left);
             preOrderHelper(node->right);
         }
@@ -44,7 +42,7 @@ private:
     void inOrderHelper(NodePtr node) {
         if (node != TNULL) {
             inOrderHelper(node->left);
-            cout<<node->data<<" ";
+            std::cout<<node->data<<" ";
             inOrderHelper(node->right);
         }
     }
@@ -53,7 +51,7 @@ private:
         if (node != TNULL) {
             postOrderHelper(node->left);
             postOrderHelper(node->right);
-            cout<<node->data<<" ";
+            std::cout<<node->data<<" ";
         }
     }
 
@@ -83,9 +81,9 @@ private:
         }
 
         if (z == TNULL) {
-            cout<<"Couldn't find key" << key << " in the tree"<<endl;
+            std::cout<<"Couldn't find key" << key << " in the tree"<<std::endl;
         }else{
-            cout << key << " found" << endl;
+            std::cout << key << " found" << std::endl;
         }
 
         return z;
@@ -189,7 +187,7 @@ private:
         }
 
         if (z == TNULL) {
-            cout<<"Couldn't find key " << key << " in the tree"<<endl;
+            std::cout<<"Couldn't find key " << key << " in the tree"<<std::endl;
             return;
         }
 
@@ -275,24 +273,24 @@ private:
         root->color = 0;
     }
 
-    void printHelper(NodePtr root, string indent, bool last) {
+    void printHelper(NodePtr root, std::string indent, bool last) {
         // print the tree structure on the screen
         if (root != TNULL) {
-            cout<<indent;
+            std::cout<<indent;
             if (last) {
-                cout<<"R----";
+                std::cout<<"R----";
                 indent += "     ";
             } else {
-                cout<<"L----";
+                std::cout<<"L----";
                 indent += "|    ";
             }
 
-            string sColor = root->color?"RED":"BLACK";
-            cout<<root->data<<"("<<sColor<<")"<<endl;
+            std::string sColor = root->color?"RED":"BLACK";
+            std::cout<<root->data<<"("<<sColor<<")"<<std::endl;
             printHelper(root->left, indent, false);
             printHelper(root->right, indent, true);
         }
-        // cout<<root->left->data<<endl;
+        // std::cout<<root->left->data<<std::endl;
     }
 
 public:
@@ -466,7 +464,7 @@ public:
         // Fix the tree
         fixInsert(node);
 
-        cout << key << " deleted \n";
+        std::cout << key << " deleted \n";
 
     }
 
@@ -477,7 +475,7 @@ public:
     // delete the node from the tree
     void eraze(int data) {
         deleteNodeHelper(this->root, data);
-        cout << data << " deleted \n";
+        std::cout << data << " deleted \n";
 
     }
 
