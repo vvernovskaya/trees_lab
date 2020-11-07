@@ -16,6 +16,7 @@ protected:
     virtual T find() = 0;
     virtual void erase() = 0;
     virtual T end() = 0;
+    virtual int size() = 0;
 };
 
 #endif //TREES_LAB_TREE_REQUIREMENTS_H
