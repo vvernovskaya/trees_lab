@@ -2,9 +2,14 @@
 #include <chrono>
 #include <vector>
 #include <random>
-#include <RBTree.h>
+#include "RBTree.h"
+#include <set>
+#include <iomanip>
+#include <fstream>
 
 //include tree headers
+
+using std::vector;
 
 double get_time() {
     return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()/1e6;
@@ -17,45 +22,44 @@ int32_t rand_num(int min, int max) {
     return d(e);
 }
 
-template<class CurrTree>
+template<typename CurrTree>
 class Profiler {
-    pair<vector<int32_t>, vector<double>> table_insert;
-    pair<vector<int32_t>, vector<double>> table_find;
-    pair<vector<int32_t>, vector<double>> table_erase;
-
+private:
     vector<double> times_insert;
     vector<double> times_find;
     vector<double> times_erase;
 
     vector<int32_t> tree_sizes;
 
-    CurrTree<int32_t> test_tree;
+    CurrTree test_tree;
 
+public:
     Profiler() {
         initialize_sizes();
     }
 
     void initialize_sizes() {
-        int32_t i = 1;
-        while (i < 100) {
-            tree_sizes.push_back(i);
-            i += 10;
+        int32_t n = 1;
+        while (n < 100) {
+            tree_sizes.push_back(n);
+            n += 10;
         }
-        while (i < 3000) {
-            tree_sizes.push_back(i);
-            i += 100;
+        while (n < 3000) {
+            tree_sizes.push_back(n);
+            n += 100;
         }
-        while (i < 15000) {
-            tree_sizes.push_back(i);
-            i+= 300;
+        while (n < 60000) {
+            tree_sizes.push_back(n);
+            n += 300;
         }
     }
 
     void test_insert() {
        for (int i_sz = 0; i_sz < tree_sizes.size(); i_sz++) {
-           while (test_tree.size() < tree_sizes[i]) {
-               break;
+           while (test_tree.size() < tree_sizes[i_sz]) {
+               test_tree.insert(rand_num(-10000, 10000));
            }
+           test_insert_local();
        }
     }
     void test_erase() {
@@ -66,31 +70,41 @@ class Profiler {
     }
 
     void test_insert_local() {
-        vector<double> curr_size_insert_times(20);
-        for (int i = 0; i < 20; i++) {
-            int32_t curr_num = rand_num(-10000, 10000);
-            vector<double> curr_num_insert_times(10);
-            for (int j = 0; j < 10; j++) {
-                time_start = get_time();
-                test_tree.insert(curr_num);
-                time_finish = get_time();
+        double avg_time_per_size = 0;
 
-                curr_num_insert_times.push_back(time_finish - time_start);
-                test_tree.eraze(curr_num);
+        for (int i = 0; i < 2000; i++) {
+            int32_t curr_num = rand_num(-10000, 10000);
+            double avg_time_per_num = 0;
+
+            for (int j = 0; j < 1000; j++) {
+                double time_start = get_time();
+                test_tree.insert(curr_num);
+                double time_finish = get_time();
+
+                avg_time_per_num += time_finish - time_start;
+                test_tree.erase(curr_num);
             }
-            double avg = 0;
-            for (int k = 0; k < 10; k++) {
-                avg += curr_num_insert_times[i];
-            }
-            avg = double( (double) avg / n);
-            curr_size_insert_times.push_back(avg);
+            avg_time_per_num = double( (double) avg_time_per_num / 1000);
+            avg_time_per_size += avg_time_per_num;
         }
-        double avg = 0;
-        for (int k = 0; k < 20; k++) {
-            avg += curr_size_insert_times[i];
+        avg_time_per_size = double( (double) avg_time_per_size / 2000);
+        times_insert.push_back(avg_time_per_size);
+    }
+
+    void print_insert_table() {
+        std::ofstream f;
+        f.open("output_data_2.csv");
+        for (int i = 0; i < tree_sizes.size(); i++) {
+            f << tree_sizes[i] << ",";
+            f << std::setprecision(3) << times_insert[i] << std::endl;
         }
-        avg = double( (double) avg / n);
-        times_insert.push_back(avg);
     }
 };
+
+int main() {
+    Profiler<std::set<int32_t>> prof;
+    prof.test_insert();
+    prof.print_insert_table();
+    return 0;
+}
 
