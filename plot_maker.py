@@ -11,14 +11,19 @@ file_name = "output_data_2.csv"
 with open(file_name) as f:
     csv_in = csv.reader(f)
     for row in csv_in:
-        sizes.append(row[0])
-        times.append(row[1])
+        sizes.append(int(row[0]))
+        times.append(float(row[1]))
 
 fig, ax = plt.subplots(figsize=(7, 7))
 
 x_data = sizes
 y_data = times
 title = "Asymptotic complexity of inserting an element into a tree"
+x_label = "Tree size"
+y_label = "Time"
+
+print(type(sizes[0]))
+print(type(times[0]))
 
 ax.scatter(x=x_data, y=y_data, marker='o', c='purple', edgecolor='b')
 ax.set_title(title)
