@@ -58,7 +58,7 @@ private:
     }
 
     NodePtr searchTreeHelper(NodePtr node, int key) {
-        if (node == TNULL || key == node->data) {
+       /* if (node == TNULL || key == node->data) {
             return node;
         }
 
@@ -66,6 +66,27 @@ private:
             return searchTreeHelper(node->left, key);
         }
         return searchTreeHelper(node->right, key);
+        */
+
+        NodePtr z = TNULL;
+        NodePtr x, y;
+        while (node != TNULL){
+            if (node->data == key) {
+                z = node;
+            }
+
+            if (node->data <= key) {
+                node = node->right;
+            } else {
+                node = node->left;
+            }
+        }
+
+        if (z == TNULL) {
+            cout<<"Couldn't find key" << key << " in the tree"<<endl;
+        }
+
+        return z;
     }
 
     // fix the rb tree modified by the delete operation
@@ -166,7 +187,7 @@ private:
         }
 
         if (z == TNULL) {
-            cout<<"Couldn't find key in the tree"<<endl;
+            cout<<"Couldn't find key " << key << " in the tree"<<endl;
             return;
         }
 
@@ -470,7 +491,7 @@ int main() {
     bst.insert(15);
     bst.insert(80);
     bst.eraze(25);
-
+    bst.prettyPrint();
     bst.find(15);
     bst.eraze(15);
     bst.find(15);
