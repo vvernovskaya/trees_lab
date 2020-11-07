@@ -23,7 +23,7 @@ private:
     NodePtr root;
     NodePtr TNULL;
 
-    // initializes the nodes with appropirate values
+    // initializes the nodes with appropriate values
     // all the pointers are set to point to the null pointer
     void initializeNULLNode(NodePtr node, NodePtr parent) {
         node->data = 0;
@@ -71,8 +71,8 @@ private:
     // fix the rb tree modified by the delete operation
     void fixDelete(NodePtr x) {
         NodePtr s;
-        while (x != root && x->color == 0) {
-            if (x == x->parent->left) {
+        while (x != root && x->color == 0) {  //x is black
+            if (x == x->parent->left) {  //x is left child
                 s = x->parent->right;
                 if (s->color == 1) {
                     // case 3.1
@@ -102,7 +102,7 @@ private:
                     leftRotate(x->parent);
                     x = root;
                 }
-            } else {
+            } else {              // x is right child
                 s = x->parent->left;
                 if (s->color == 1) {
                     // case 3.1
@@ -112,7 +112,7 @@ private:
                     s = x->parent->left;
                 }
 
-                if (s->right->color == 0 && s->right->color == 0) {
+                if (s->right->color == 0 && s->left->color == 0) {
                     // case 3.2
                     s->color = 1;
                     x = x->parent;
@@ -468,11 +468,12 @@ int main() {
     bst.insert(18);
     bst.insert(5);
     bst.insert(15);
-    bst.insert(17);
-    bst.insert(25);
-    bst.insert(40);
     bst.insert(80);
     bst.eraze(25);
+
+    bst.find(15);
+    bst.eraze(15);
+    bst.find(15);
     bst.prettyPrint();
     return 0;
 }
