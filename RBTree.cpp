@@ -84,6 +84,8 @@ private:
 
         if (z == TNULL) {
             cout<<"Couldn't find key" << key << " in the tree"<<endl;
+        }else{
+            cout << key << " found" << endl;
         }
 
         return z;
@@ -217,6 +219,7 @@ private:
             y->color = z->color;
         }
         delete z;
+        cout << key << " deleted \n";
         if (y_original_color == 0){
             fixDelete(x);
         }
@@ -463,6 +466,9 @@ public:
 
         // Fix the tree
         fixInsert(node);
+
+        cout << key << " inserted \n";
+
     }
 
     NodePtr getRoot(){
