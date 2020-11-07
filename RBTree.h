@@ -275,6 +275,11 @@ public:
         root = TNULL;
     }
 
+    ~RBTree(){
+        delete root;
+        delete TNULL;
+    }
+
     unsigned int size(){
         return this->tree_size;
     }
