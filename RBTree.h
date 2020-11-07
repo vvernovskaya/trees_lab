@@ -415,7 +415,7 @@ public:
 
 
     // delete the node from the tree
-    void eraze(int data) {
+    void erase(int data) {
         deleteNodeHelper(this->root, data);
         std::cout << data << " deleted \n";
 
