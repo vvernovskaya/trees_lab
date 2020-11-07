@@ -219,7 +219,6 @@ private:
             y->color = z->color;
         }
         delete z;
-        cout << key << " deleted \n";
         if (y_original_color == 0){
             fixDelete(x);
         }
@@ -467,7 +466,7 @@ public:
         // Fix the tree
         fixInsert(node);
 
-        cout << key << " inserted \n";
+        cout << key << " deleted \n";
 
     }
 
@@ -478,6 +477,8 @@ public:
     // delete the node from the tree
     void eraze(int data) {
         deleteNodeHelper(this->root, data);
+        cout << data << " deleted \n";
+
     }
 
     // print the tree structure on the screen
@@ -489,18 +490,3 @@ public:
 
 };
 
-int main() {
-    RBTree bst;
-    bst.insert(8);
-    bst.insert(18);
-    bst.insert(5);
-    bst.insert(15);
-    bst.insert(80);
-    bst.eraze(25);
-    bst.prettyPrint();
-    bst.find(15);
-    bst.eraze(15);
-    bst.find(15);
-    bst.prettyPrint();
-    return 0;
-}
