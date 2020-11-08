@@ -4,7 +4,9 @@
 #include "RBTree.h"
 
 int main() {
+    std::cout << "before  tree\n";
     RBTree<int> my_tree_int;
+    std::cout << my_tree_int.size() << "\n";
 
     my_tree_int.insert(1);
     my_tree_int.insert(2);

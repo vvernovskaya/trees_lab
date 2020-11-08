@@ -54,7 +54,7 @@ private:
          }
     }
 
-    Node<T>* searchTreeHelper(Node<T>* node, int key) {
+    Node<T>* searchTreeHelper(Node<T>* node, T key) {
        /* if (node == TNULL || key == node->data) {
             return node;
         }
@@ -78,7 +78,6 @@ private:
                 node = node->left;
             }
         }
-
 
         return z;
     }
@@ -152,7 +151,6 @@ private:
         x->color = 0;
     }
 
-
     void rbTransplant(Node<T>* u, Node<T>* v){
         if (u->parent == nullptr) {
             root = v;
@@ -164,7 +162,7 @@ private:
         v->parent = u->parent;
     }
 
-    void deleteNodeHelper(Node<T>* node, int key) {
+    void deleteNodeHelper(Node<T>* node, T key) {
         // find the node containing key
         Node<T>* z = TNULL;
         Node<T>* x;
@@ -267,6 +265,17 @@ private:
         root->color = 0;
     }
 
+    void deleteAllTree(Node<T>* node){
+            if (node == nullptr) return;
+
+            /* first delete both subtrees */
+            deleteAllTree(node->left);
+            deleteAllTree(node->right);
+
+            /* then delete the node */
+            delete node;
+    }
+
 
 public:
     RBTree() {
@@ -278,7 +287,8 @@ public:
     }
 
     ~RBTree(){
-        delete root;
+        std::cout << "here\n";
+        deleteAllTree(this->root);
         delete TNULL;
     }
 
@@ -305,7 +315,7 @@ public:
 
     // search the tree for the key k
     // and return the corresponding node
-    Node<T>* find(int k) {
+    Node<T>* find(T k) {
         return searchTreeHelper(this->root, k);
     }
 
@@ -366,7 +376,7 @@ public:
 
     // insert the key to the tree in its appropriate position
     // and fix the tree
-    void insert(int key) {
+    void insert(T key) {
         // Ordinary Binary Search Insertion
         this->tree_size++;
         Node<T>* node = new Node<T>;
@@ -415,7 +425,7 @@ public:
 
 
     // delete the node from the tree
-    void erase(int data) {
+    void erase(T data) {
         this->tree_size--;
         deleteNodeHelper(this->root, data);
     }
