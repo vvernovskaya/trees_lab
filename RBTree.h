@@ -302,7 +302,6 @@ public:
     }
 
     ~RBTree(){
-        std::cout << "here\n";
         //deleteAllTree(this->root);
         delete TNULL;
     }
@@ -364,6 +363,10 @@ public:
     void erase(T data) {
         this->tree_size--;
         deleteNodeHelper(this->root, data);
+    }
+
+    Node<T>* end(){
+        return nullptr;
     }
 
 };

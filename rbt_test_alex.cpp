@@ -21,5 +21,9 @@ int main() {
     my_tree_double.insert(4.3);
     my_tree_double.insert(0.4);
     std::cout << my_tree_double.size();
+
+    if (my_tree_double.end() == nullptr){
+        std::cout << "end\n";
+    }
     return 0;
 }
