@@ -11,7 +11,7 @@ struct Node {
     Node *parent; // pointer to the parent
     Node *left; // pointer to left child
     Node *right; // pointer to right child
-    int color; // 1 -> Red, 0 -> Black
+    bool color; // true -> Red, false -> Black
 };
 
 template<class T>
@@ -184,7 +184,7 @@ private:
         }
 
         y = z;
-        int y_original_color = y->color;
+        bool y_original_color = y->color;
         if (z->left == TNULL) {
             x = z->right;
             rbTransplant(z, z->right);
