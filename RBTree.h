@@ -22,6 +22,42 @@ private:
     Node<T>* TNULL;
     unsigned int tree_size = 0;
 
+    void leftRotate(Node<T>* x) {
+        Node<T>* y = x->right;
+        x->right = y->left;
+        if (y->left != TNULL) {
+            y->left->parent = x;
+        }
+        y->parent = x->parent;
+        if (x->parent == nullptr) {
+            this->root = y;
+        } else if (x == x->parent->left) {
+            x->parent->left = y;
+        } else {
+            x->parent->right = y;
+        }
+        y->left = x;
+        x->parent = y;
+    }
+
+    void rightRotate(Node<T>* x) {
+        Node<T>* y = x->left;
+        x->left = y->right;
+        if (y->right != TNULL) {
+            y->right->parent = x;
+        }
+        y->parent = x->parent;
+        if (x->parent == nullptr) {
+            this->root = y;
+        } else if (x == x->parent->right) {
+            x->parent->right = y;
+        } else {
+            x->parent->left = y;
+        }
+        y->right = x;
+        x->parent = y;
+    }
+
     Node<T>* searchTreeHelper(Node<T>* node, T key) {
        /* if (node == TNULL || key == node->data) {
             return node;
@@ -242,30 +278,6 @@ private:
             delete node;
     }
 
-
-public:
-    RBTree() {
-        TNULL = new Node<T>;
-        TNULL->color = 0;
-        TNULL->left = nullptr;
-        TNULL->right = nullptr;
-        root = TNULL;
-    }
-
-    ~RBTree(){
-        std::cout << "here\n";
-        deleteAllTree(this->root);
-        delete TNULL;
-    }
-
-    unsigned int size(){
-        return this->tree_size;
-    }
-
-    Node<T>* find(T k) {
-        return searchTreeHelper(this->root, k);
-    }
-
     Node<T>* minimum(Node<T>* node) {
         while (node->left != TNULL) {
             node = node->left;
@@ -280,40 +292,27 @@ public:
         return node;
     }
 
-    void leftRotate(Node<T>* x) {
-        Node<T>* y = x->right;
-        x->right = y->left;
-        if (y->left != TNULL) {
-            y->left->parent = x;
-        }
-        y->parent = x->parent;
-        if (x->parent == nullptr) {
-            this->root = y;
-        } else if (x == x->parent->left) {
-            x->parent->left = y;
-        } else {
-            x->parent->right = y;
-        }
-        y->left = x;
-        x->parent = y;
+public:
+    RBTree() {
+        TNULL = new Node<T>;
+        TNULL->color = 0;
+        TNULL->left = nullptr;
+        TNULL->right = nullptr;
+        root = TNULL;
     }
 
-    void rightRotate(Node<T>* x) {
-        Node<T>* y = x->left;
-        x->left = y->right;
-        if (y->right != TNULL) {
-            y->right->parent = x;
-        }
-        y->parent = x->parent;
-        if (x->parent == nullptr) {
-            this->root = y;
-        } else if (x == x->parent->right) {
-            x->parent->right = y;
-        } else {
-            x->parent->left = y;
-        }
-        y->right = x;
-        x->parent = y;
+    ~RBTree(){
+        std::cout << "here\n";
+        //deleteAllTree(this->root);
+        delete TNULL;
+    }
+
+    unsigned int size(){
+        return this->tree_size;
+    }
+
+    Node<T>* find(T k) {
+        return searchTreeHelper(this->root, k);
     }
 
     void insert(T key) {
