@@ -16,43 +16,11 @@ struct Node {
 
 template<class T>
 
-// class RBTree implements the operations in Red Black Tree
 class RBTree {
 private:
     Node<T>* root;
     Node<T>* TNULL;
     unsigned int tree_size = 0;
-
-    // initializes the nodes with appropriate values
-    // all the pointers are set to point to the null pointer
-    void initializeNULLNode(Node<T>* node, Node<T>* parent) {
-        node->data = 0;
-        node->parent = parent;
-        node->left = nullptr;
-        node->right = nullptr;
-        node->color = 0;
-    }
-
-    void preOrderHelper(Node<T>* node) {
-        if (node != TNULL) {
-             preOrderHelper(node->left);
-            preOrderHelper(node->right);
-        }
-    }
-
-    void inOrderHelper(Node<T>* node) {
-        if (node != TNULL) {
-            inOrderHelper(node->left);
-             inOrderHelper(node->right);
-        }
-    }
-
-    void postOrderHelper(Node<T>* node) {
-        if (node != TNULL) {
-            postOrderHelper(node->left);
-            postOrderHelper(node->right);
-         }
-    }
 
     Node<T>* searchTreeHelper(Node<T>* node, T key) {
        /* if (node == TNULL || key == node->data) {
@@ -82,7 +50,6 @@ private:
         return z;
     }
 
-    // fix the rb tree modified by the delete operation
     void fixDelete(Node<T>* x) {
         Node<T>* s;
         while (x != root && x->color == 0) {  //x is black
@@ -214,7 +181,6 @@ private:
         }
     }
 
-    // fix the red-black tree
     void fixInsert(Node<T>* k){
         Node<T>* u;
         while (k->parent->color == 1) {
@@ -295,31 +261,11 @@ public:
     unsigned int size(){
         return this->tree_size;
     }
-    // Pre-Order traversal
-    // Node->Left Subtree->Right Subtree
-    void preorder() {
-        preOrderHelper(this->root);
-    }
 
-    // In-Order traversal
-    // Left Subtree -> Node -> Right Subtree
-    void inorder() {
-        inOrderHelper(this->root);
-    }
-
-    // Post-Order traversal
-    // Left Subtree -> Right Subtree -> Node
-    void postorder() {
-        postOrderHelper(this->root);
-    }
-
-    // search the tree for the key k
-    // and return the corresponding node
     Node<T>* find(T k) {
         return searchTreeHelper(this->root, k);
     }
 
-    // find the node with the minimum key
     Node<T>* minimum(Node<T>* node) {
         while (node->left != TNULL) {
             node = node->left;
@@ -327,7 +273,6 @@ public:
         return node;
     }
 
-    // find the node with the maximum key
     Node<T>* maximum(Node<T>* node) {
         while (node->right != TNULL) {
             node = node->right;
@@ -335,8 +280,6 @@ public:
         return node;
     }
 
-
-    // rotate left at node x
     void leftRotate(Node<T>* x) {
         Node<T>* y = x->right;
         x->right = y->left;
@@ -355,7 +298,6 @@ public:
         x->parent = y;
     }
 
-    // rotate right at node x
     void rightRotate(Node<T>* x) {
         Node<T>* y = x->left;
         x->left = y->right;
@@ -374,10 +316,7 @@ public:
         x->parent = y;
     }
 
-    // insert the key to the tree in its appropriate position
-    // and fix the tree
     void insert(T key) {
-        // Ordinary Binary Search Insertion
         this->tree_size++;
         Node<T>* node = new Node<T>;
         node->parent = nullptr;
@@ -423,13 +362,10 @@ public:
         fixInsert(node);
     }
 
-
-    // delete the node from the tree
     void erase(T data) {
         this->tree_size--;
         deleteNodeHelper(this->root, data);
     }
-
 
 };
 
