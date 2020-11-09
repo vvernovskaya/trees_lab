@@ -1,6 +1,8 @@
 # trees_lab
 
-First, let's check how the profiler works on std::set. Here are the plots with the true units. Each point is averaged on 1000 equal numbers and 2000 different ones.
+Here are the results for testing trees with the profiler. First, it fills the tree with random elements up to a certain size of a tree. Then the three functions (insert(), erase() and find()) are tested separately.
+<br />
+Let's start with checking how the profiler works on std::set. Here are the plots with the true units. Each point is averaged on 1000 equal numbers and 2000 different ones.
 ![picture](set_lin.png)
 Prof that the relation is logarithmic in different scales
 ![picture](set_log.png)
