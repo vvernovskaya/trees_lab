@@ -2,14 +2,7 @@
 #define TREES_LAB_TREE_REQUIREMENTS_H
 
 
-template <class T>   // T must be the Iterator class !!!
-class Tree_Iterator_Obligatory {
-protected:
-    virtual bool operator== (T& other) = 0;
-};
-
-
-template <class T>   // T must be the Iterator class !!!
+template <class T>   // T must be Node* in the tree header file
 class Tree_Obligatory {
 protected:
     virtual void insert() = 0;
