@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "tree_requirements.h"
 
 template<typename T> class AVL;
 
@@ -21,9 +21,11 @@ template <typename T> class AVL_Node{
 };
 
 template<typename  T> class AVL{
-private:
+    Tree_Obligatory<AVL_Node<T>*>
     int sizetree = 0;
     AVL_Node<T>* head = nullptr;
+private:
+
 
     unsigned char height(AVL_Node<T>* p)
     {
