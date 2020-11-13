@@ -20,13 +20,10 @@ template <typename T> class AVL_Node{
     friend  class AVL<T>;
 };
 
-template<typename  T> class AVL{
-    Tree_Obligatory<AVL_Node<T>*>
-    int sizetree = 0;
+template<typename  T> class AVL : public Tree_Obligatory<AVL_Node, T>{
+    unsigned int sizetree = 0;
     AVL_Node<T>* head = nullptr;
 private:
-
-
     unsigned char height(AVL_Node<T>* p)
     {
         return p?p->height:0;
@@ -136,7 +133,7 @@ private:
         if (!node)
             return;
         print(node->left);
-        std::cout << node->value << ' ';
+        //std::cout << node->value << ' ';
         print(node->right);
     }
 
@@ -159,14 +156,14 @@ public:
 
     void insert(T value)
     {
-        std::cout << "insert " << value<<'\n';
+        //std::cout << "insert " << value<<'\n';
         if(!find(value))
             head = insert(head, value);
     }
 
     void erase(T value)
     {
-        std::cout << "erase " << value<<'\n';
+        //std::cout << "erase " << value<<'\n';
 
         head = erase(head, value);
     }
@@ -200,7 +197,7 @@ public:
         std::cout << "\n";
     }
     
-    int size(){
+    unsigned int size(){
     	return sizetree;
     }
     
