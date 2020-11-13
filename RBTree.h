@@ -59,16 +59,6 @@ private:
     }
 
     Node<T>* searchTreeHelper(Node<T>* node, T key) {
-       /* if (node == TNULL || key == node->data) {
-            return node;
-        }
-
-        if (key < node->data) {
-            return searchTreeHelper(node->left, key);
-        }
-        return searchTreeHelper(node->right, key);
-        */
-
         Node<T>* z = TNULL;
         while (node != TNULL){
             if (node->data == key) {
@@ -81,7 +71,6 @@ private:
                 node = node->left;
             }
         }
-
         return z;
     }
 
@@ -165,26 +154,13 @@ private:
     }
 
     void deleteNodeHelper(Node<T>* node, T key) {
-        // find the node containing key
-        Node<T>* z = TNULL;
+        Node<T>* z = find(key);
+        if (z == TNULL){
+            return;
+        }
+
         Node<T>* x;
         Node<T>* y;
-        while (node != TNULL){
-            if (node->data == key) {
-                z = node;
-            }
-
-            if (node->data <= key) {
-                node = node->right;
-            } else {
-                node = node->left;
-            }
-        }
-
-        if (z == TNULL) {
-             return;
-        }
-
         y = z;
         bool y_original_color = y->color;
         if (z->left == TNULL) {
@@ -265,7 +241,6 @@ private:
         }
         root->color = 0;
     }
-
 
     void deleteAllTree(Node<T>* node){
         if (node == TNULL)
