@@ -138,7 +138,7 @@ private:
 
     void fixInsert(Node<T>* k){
         Node<T>* u;
-        while (k->parent->color == 1) {
+        while (k->parent->color == 1) { // parent is red
             if (k->parent == k->parent->parent->right) {
                 u = k->parent->parent->left; // uncle
                 if (u->color == 1) {
@@ -288,6 +288,19 @@ public:
             return;
         }
 
+        if (z->left == TNULL and z->right == TNULL){
+            if (z == root){
+                root = TNULL;
+            }else{
+                if(z->parent->left == z){
+                    z->parent->left = TNULL;
+                }else{
+                    z->parent->right = TNULL;
+                }
+            }
+            return;
+        }
+
         Node<T> *y;
         Node<T> *x;
 
@@ -297,7 +310,6 @@ public:
             y = z->right;
             while (y->left != TNULL) y = y->left; // find free tree successor with a leaf
         }
-
 
         // x is the only child of y:
         if (y->left != TNULL)
