@@ -10,3 +10,7 @@ Let's go ahead and test Sasha's red-black tree. Each point is averaged on 2000 e
 ![picture](plots/RBTree/rbtree_lin.png)
 And tree sizes to logarithmical.
 ![picture](plots/RBTree/rbtree_log.png)
+Same with Arkadiy's AVL-tree.
+![picture](plots/AVLTree/avl_lin.png)
+![picture](plots/AVLTree/avl_log.png)
+Analysis of plots: 
