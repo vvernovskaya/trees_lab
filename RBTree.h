@@ -60,18 +60,17 @@ private:
 
     void fixDelete(Node<T>* x) {
         Node<T>* s;
-        while (x != root && x->color == 0) {  //x is black
+        while (x != root && x->color == 0) {  //x is black and not root
             if (x == x->parent->left) {  //x is left child
-                s = x->parent->right;
-                if (s->color == 1) {
+                s = x->parent->right;    // s is sibling
+                if (s->color == 1) { // if sibling is red
                     // case 3.1
                     s->color = 0;
                     x->parent->color = 1;
                     leftRotate(x->parent);
                     s = x->parent->right;
                 }
-
-                if (s->left->color == 0 && s->right->color == 0) {
+                if (s->left->color == 0 && s->right->color == 0) { // sibling has black children
                     // case 3.2
                     s->color = 1;
                     x = x->parent;
@@ -83,7 +82,6 @@ private:
                         rightRotate(s);
                         s = x->parent->right;
                     }
-
                     // case 3.4
                     s->color = x->parent->color;
                     x->parent->color = 0;
@@ -91,7 +89,7 @@ private:
                     leftRotate(x->parent);
                     x = root;
                 }
-            } else {              // x is right child
+            } else {              // x is right child, similarly
                 s = x->parent->left;
                 if (s->color == 1) {
                     // case 3.1
@@ -135,44 +133,6 @@ private:
             u->parent->right = v;
         }
         v->parent = u->parent;
-    }
-
-    void deleteNodeHelper(T k) {
-        Node<T>* z = find(k);
-        if (z == TNULL){
-            return;
-        }
-        Node<T>* x;
-        Node<T>* y;
-        y = z;
-        bool y_original_color = y->color;
-        if (z->left == TNULL) {
-            x = z->right;
-            rbTransplant(z, z->right);
-        } else if (z->right == TNULL) {
-            x = z->left;
-            rbTransplant(z, z->left);
-        } else {
-            y = minimum(z->right);
-            y_original_color = y->color;
-            x = y->right;
-            if (y->parent == z) {
-                x->parent = y;
-            } else {
-                rbTransplant(y, y->right);
-                y->right = z->right;
-                y->right->parent = y;
-            }
-
-            rbTransplant(z, y);
-            y->left = z->left;
-            y->left->parent = y;
-            y->color = z->color;
-        }
-        delete z;
-        if (y_original_color == 0){
-            fixDelete(x);
-        }
     }
 
     void fixInsert(Node<T>* k){
@@ -280,6 +240,7 @@ public:
 
     void insert(T key) {
         this->tree_size++;
+
         Node<T>* node = new Node<T>;
         node->parent = nullptr;
         node->data = key;
@@ -290,6 +251,7 @@ public:
         Node<T>* y = nullptr;
         Node<T>* x = this->root;
 
+        //find place for new node
         while (x != TNULL) {
             y = x;
             if (node->data < x->data) {
@@ -326,7 +288,42 @@ public:
 
     void erase(T key) {
         this->tree_size--;
-        deleteNodeHelper(key);
+
+        Node<T>* z = find(key); // find the node
+        if (z == TNULL){
+            return;
+        }
+        Node<T>* x;
+        Node<T>* y;
+        y = z;
+        bool y_original_color = y->color;
+        if (z->left == TNULL) { // no left child
+            x = z->right;
+            rbTransplant(z, z->right);
+        } else if (z->right == TNULL) {  // no right child
+            x = z->left;
+            rbTransplant(z, z->left);
+        } else {
+            y = minimum(z->right);
+            y_original_color = y->color;
+            x = y->right;
+            if (y->parent == z) {
+                x->parent = y;
+            } else {
+                rbTransplant(y, y->right);
+                y->right = z->right;
+                y->right->parent = y;
+            }
+
+            rbTransplant(z, y);
+            y->left = z->left;
+            y->left->parent = y;
+            y->color = z->color;
+        }
+        delete z;
+        if (y_original_color == 0){ //only need balancing is node was black
+            fixDelete(x);
+        }
     }
 
     Node<T>* end(){
