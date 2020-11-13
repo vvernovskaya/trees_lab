@@ -137,12 +137,11 @@ private:
         v->parent = u->parent;
     }
 
-    void deleteNodeHelper(Node<T>* node, T key) {
-        Node<T>* z = find(key);
+    void deleteNodeHelper(T k) {
+        Node<T>* z = find(k);
         if (z == TNULL){
             return;
         }
-
         Node<T>* x;
         Node<T>* y;
         y = z;
@@ -325,9 +324,9 @@ public:
         fixInsert(node);
     }
 
-    void erase(T data) {
+    void erase(T key) {
         this->tree_size--;
-        deleteNodeHelper(this->root, data);
+        deleteNodeHelper(key);
     }
 
     Node<T>* end(){
