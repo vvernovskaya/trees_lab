@@ -58,22 +58,6 @@ private:
         x->parent = y;
     }
 
-    Node<T>* searchTreeHelper(Node<T>* node, T key) {
-        Node<T>* z = TNULL;
-        while (node != TNULL){
-            if (node->data == key) {
-                z = node;
-            }
-
-            if (node->data <= key) {
-                node = node->right;
-            } else {
-                node = node->left;
-            }
-        }
-        return z;
-    }
-
     void fixDelete(Node<T>* x) {
         Node<T>* s;
         while (x != root && x->color == 0) {  //x is black
@@ -279,8 +263,20 @@ public:
         return this->tree_size;
     }
 
-    Node<T>* find(T k) {
-        return searchTreeHelper(this->root, k);
+    Node<T>* find(T key) {
+        Node<T>* node = this->root;
+        Node<T>* z = TNULL;
+        while (node != TNULL){
+            if (node->data == key) {
+                z = node;
+            }
+            if (node->data <= key) {
+                node = node->right;
+            } else {
+                node = node->left;
+            }
+        }
+        return z;
     }
 
     void insert(T key) {
