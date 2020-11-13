@@ -13,4 +13,3 @@ And tree sizes to logarithmical.
 Same with Arkadiy's AVL-tree.
 ![picture](plots/AVLTree/avl_lin.png)
 ![picture](plots/AVLTree/avl_log.png)
-Analysis of plots: 
