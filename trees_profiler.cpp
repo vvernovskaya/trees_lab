@@ -1,3 +1,4 @@
+#include "AVL.h"
 #include <iostream>
 #include <chrono>
 #include <vector>
@@ -192,15 +193,15 @@ public:
 
     void test_all() {
         call_test('a');
-        make_table(times_insert, "output_times_insert_rb.csv");
-        make_table(times_find, "output_times_find_rb.csv");
-        make_table(times_erase, "output_times_erase_rb.csv");
+        make_table(times_insert, "output_times_insert_avl.csv");
+        make_table(times_find, "output_times_find_avl.csv");
+        make_table(times_erase, "output_times_erase_avl.csv");
         std::cout << "Finished testing all three functions!" << '\n';
     }
 };
 
 int main() {
-    Profiler<RBTree<int32_t>> prof;
+    Profiler<AVL<int32_t>> prof;
     prof.test_all();
     return 0;
 }
