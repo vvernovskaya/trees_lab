@@ -12,6 +12,7 @@ struct Node {
     Node *left; // pointer to left child
     Node *right; // pointer to right child
     bool color; // true -> Red, false -> Black
+
 };
 
 template<typename T>
@@ -196,13 +197,6 @@ private:
         }
     }
 
-    Node<T>* minimum(Node<T>* node) {
-        while (node->left != TNULL) {
-            node = node->left;
-        }
-        return node;
-    }
-
 
 public:
     RBTree() {
@@ -289,41 +283,43 @@ public:
     void erase(T key) {
         this->tree_size--;
 
-        Node<T>* z = find(key); // find the node
-        if (z == TNULL){
+        Node<T> *z = find(key); // find the node
+        if (z == TNULL) {
             return;
         }
-        Node<T>* x;
-        Node<T>* y;
-        y = z;
-        bool y_original_color = y->color;
-        if (z->left == TNULL) { // no left child
-            x = z->right;
-            rbTransplant(z, z->right);
-        } else if (z->right == TNULL) {  // no right child
-            x = z->left;
-            rbTransplant(z, z->left);
-        } else {
-            y = minimum(z->right);
-            y_original_color = y->color;
-            x = y->right;
-            if (y->parent == z) {
-                x->parent = y;
-            } else {
-                rbTransplant(y, y->right);
-                y->right = z->right;
-                y->right->parent = y;
-            }
 
-            rbTransplant(z, y);
-            y->left = z->left;
-            y->left->parent = y;
-            y->color = z->color;
+        Node<T> *y;
+        Node<T> *x;
+
+        if (z->left == TNULL or z->right == TNULL) { // z has one child
+            y = z;
+        } else {
+            y = z->right;
+            while (y->left != TNULL) y = y->left; // find free tree successor with a leaf
         }
-        delete z;
-        if (y_original_color == 0){ //only need balancing is node was black
+
+
+        // x is the only child of y:
+        if (y->left != TNULL)
+            x = y->left;
+        else
+            x = y->right;
+
+        // remove y
+        x->parent = y->parent;
+        if (y->parent)
+            if (y == y->parent->left) // y is left child
+                y->parent->left = x;
+            else
+                y->parent->right = x;
+        else
+            root = x;
+
+        if (y != z) z->data = y->data;
+
+        if (y->color == false)
             fixDelete(x);
-        }
+
     }
 
     Node<T>* end(){
