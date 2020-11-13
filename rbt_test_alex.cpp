@@ -2,9 +2,6 @@
 // Created by User on 11/7/2020.
 //
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
 
 #include "RBTree.h"
 
@@ -30,9 +27,6 @@ int main() {
     if (my_tree_double.end() == nullptr){
         std::cout << "end\n";
     }
-
-    _CrtDumpMemoryLeaks();
-
 
     return 0;
 }

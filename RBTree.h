@@ -5,7 +5,7 @@
 
 template<class T>
 
-// data structure that represents a node in the tree
+
 struct Node {
     T data; // holds the key
     Node *parent; // pointer to the parent
@@ -267,15 +267,16 @@ private:
         root->color = 0;
     }
 
+
     void deleteAllTree(Node<T>* node){
-            if (node == nullptr) return;
-
-            /* first delete both subtrees */
-            deleteAllTree(node->left);
-            deleteAllTree(node->right);
-
-            /* then delete the node */
+        if (node == TNULL)
+            return;
+        deleteAllTree(node->left);
+        deleteAllTree(node->right);
+        if(node->left == TNULL && node->right == TNULL){
             delete node;
+            return;
+        }
     }
 
     Node<T>* minimum(Node<T>* node) {
@@ -285,12 +286,6 @@ private:
         return node;
     }
 
-    Node<T>* maximum(Node<T>* node) {
-        while (node->right != TNULL) {
-            node = node->right;
-        }
-        return node;
-    }
 
 public:
     RBTree() {
@@ -302,7 +297,7 @@ public:
     }
 
     ~RBTree(){
-        //deleteAllTree(this->root);
+        deleteAllTree(this->root);
         delete TNULL;
     }
 
