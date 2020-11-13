@@ -2,9 +2,9 @@
 // Created by User on 11/7/2020.
 //
 #include<iostream>
+#include "tree_requirements.h"
 
-template<class T>
-
+template<typename T>
 
 struct Node {
     T data; // holds the key
@@ -14,9 +14,9 @@ struct Node {
     bool color; // true -> Red, false -> Black
 };
 
-template<class T>
+template<typename T>
 
-class RBTree {
+class RBTree : public Tree_Obligatory<Node, T>{
 private:
     Node<T>* root;
     Node<T>* TNULL;
