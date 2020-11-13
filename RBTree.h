@@ -70,7 +70,6 @@ private:
         */
 
         Node<T>* z = TNULL;
-        Node<T>* y;
         while (node != TNULL){
             if (node->data == key) {
                 z = node;
