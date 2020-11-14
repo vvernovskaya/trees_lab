@@ -10,6 +10,6 @@ Let's go ahead and test Sasha's red-black tree. Each point is averaged on 2000 e
 ![picture](plots/RBTree/rbtree_lin.png)
 And tree sizes to logarithmical.
 ![picture](plots/RBTree/rbtree_log.png)
-Same with Arkadiy's AVL-tree.
+Testing Arkadiy's AVL tree on the same number of iterations made windows freeze, so we had to reduce the number of inserting the same element to 50. It can be derived from plots that inserting and deleting from Arkadiy's AVL tree takes much longer. 
 ![picture](plots/AVLTree/avl_lin.png)
 ![picture](plots/AVLTree/avl_log.png)

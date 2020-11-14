@@ -9,9 +9,10 @@
 #include <iomanip>
 #include <fstream>
 
-const int NUM_NUM = 40;
-const int NUM_TEST_ONE = 20;
-const int RAND_RANGE = 200000;
+
+const int NUM_NUM = 4000;
+const int NUM_TEST_ONE = 50;
+const int RAND_RANGE = 200000000;
 
 using std::vector;
 
