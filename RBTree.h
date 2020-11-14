@@ -125,17 +125,6 @@ private:
         x->color = 0;
     }
 
-    void rbTransplant(Node<T>* u, Node<T>* v){
-        if (u->parent == nullptr) {
-            root = v;
-        } else if (u == u->parent->left){
-            u->parent->left = v;
-        } else {
-            u->parent->right = v;
-        }
-        v->parent = u->parent;
-    }
-
     void fixInsert(Node<T>* k){
         Node<T>* u;
         while (k->parent->color == 1) { // parent is red
